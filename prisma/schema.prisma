@@ -17,16 +17,16 @@ enum Plan {
 }
 
 model Account {
-  id       String @id @default(uuid())
-  name     String
-  planType Plan   @default(FREE)
-
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  deletedAt  DateTime?
+  id         String      @id @default(uuid())
+  name       String
+  plan_type  Plan        @default(FREE)
   users      User[]
   links      Link[]
   linkGroups LinkGroup[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   @@map("accounts")
 }
