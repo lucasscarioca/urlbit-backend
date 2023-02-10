@@ -6,13 +6,18 @@
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "dist",
-    "baseUrl": ".",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": "./src",
     "paths": {
-      "*": ["node_modules/*"]
+      "*": ["node_modules/*"],
+      "@modules/*": ["modules/*"],
+      "@middlewares/*": ["middlewares/*"],
+      "@database/*": ["database/*"],
+      "@utils/*": ["utils/*"]
     },
     "strict": true,
-    "typeRoots": ["./src/@types/environment.d.ts"]
+    "typeRoots": ["./src/@types"]
   },
   "include": ["src/**/*"]
 }

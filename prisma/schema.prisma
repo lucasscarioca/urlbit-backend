@@ -14,19 +14,19 @@ enum Plan {
   FREE
   STARTER
   BUSSINESS
-  CUSTOM
 }
 
 model Account {
-  id        String @id @default(uuid())
-  name      String
-  username  String @unique
-  plan_type Plan   @default(FREE)
+  id       String @id @default(uuid())
+  name     String
+  planType Plan   @default(FREE)
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-  User      User[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  deletedAt  DateTime?
+  users      User[]
+  links      Link[]
+  linkGroups LinkGroup[]
 
   @@map("accounts")
 }
@@ -38,18 +38,52 @@ enum Role {
 }
 
 model User {
-  id             String  @id @default(uuid())
-  name           String
-  email          String  @unique
-  password       String
-  remember_token String?
-  role           Role    @default(USER)
-  accountId      String
-  account        Account @relation(fields: [accountId], references: [id])
+  id        String  @id @default(uuid())
+  name      String
+  email     String  @unique
+  password  String
+  role      Role    @default(USER)
+  accountId String
+  account   Account @relation(fields: [accountId], references: [id])
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
   @@map("users")
+}
+
+model Link {
+  id          String    @id @default(uuid())
+  url         String
+  urlId       String
+  isActive    Boolean
+  name        String
+  description String
+  accountId   String
+  account     Account   @relation(fields: [accountId], references: [id])
+  linkGroupId String
+  linkGroup   LinkGroup @relation(fields: [linkGroupId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@map("links")
+}
+
+model LinkGroup {
+  id        String   @id @default(uuid())
+  name      String
+  isActive  Boolean
+  expiresAt DateTime
+  accountId String
+  account   Account  @relation(fields: [accountId], references: [id])
+  links     Link[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@map("linkGroups")
 }
